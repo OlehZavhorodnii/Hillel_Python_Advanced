@@ -1,10 +1,5 @@
-def get_element(*args):  # get element from the sequence
-    yield from iter(*args)
-
-
-def _filter(func, *args):  # select the desired elements from the sequence
-    element = get_element(*args)
-    for n in element:
+def _filter(func, iterable):
+    for n in iterable:
         if func(n):
             yield n
 
