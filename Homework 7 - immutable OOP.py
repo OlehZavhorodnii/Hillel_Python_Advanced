@@ -8,12 +8,12 @@ class Person:
         return str(self.__name + ' ' + self.__last_name)
 
 
-student = Person('Hans', 'Otto')
+student = Person('John', 'Palmer')
 print(student)
 print(id(student))
 print(hash(student))
 
-student = Person('Tom', 'Sayer')
+student = Person('Will', 'Smith')
 print(student)
 print(id(student))
 print(hash(student))
