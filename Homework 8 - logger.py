@@ -1,11 +1,12 @@
 import json
 import os
+import sys
 
 
 class Logger:
 
     def _log(self, level='', msg=''):
-        return json.dumps({level: msg}, sort_keys=True)
+        return json.dumps({'level': level, 'msg': msg})
 
     def info(self, msg):
         return self._log('INFO', msg)
@@ -20,13 +21,14 @@ class Logger:
 class StdOutLogger(Logger):
 
     def _log(self, level='', msg=''):
-        return print(json.dumps({level: msg}))
+        stdout = json.dumps({'level': level, 'msg': msg})
+        return sys.stdout.write(stdout + '\n')
 
 
 class FileLogger(Logger):
 
     def _log(self, level='', msg=''):
-        to_json = json.dumps({level: msg})
+        to_json = json.dumps({'level': level, 'msg': msg})
         if os.getcwd():
             logfile = open('log.json', 'a')
             logfile.write(to_json + '\n')
