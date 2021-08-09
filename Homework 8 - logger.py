@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Logger:
 
-    def _construct_params(self, level, msg, log_time=datetime.now(), **kwargs):
+    def _construct_params(self, level, msg, log_time=datetime.now().isoformat(), **kwargs):
         # **kwargs - additional logging parameters
         params = {  # a dictionary that stores logging settings
             'level': level,
@@ -20,14 +20,14 @@ class Logger:
         return
 
     # logging methods:
-    def info(self, msg, log_time, **kwargs):
-        self._log(self._construct_params('INFO', msg, log_time, **kwargs))
+    def info(self, msg, **kwargs):
+        self._log(self._construct_params('INFO', msg, **kwargs))
 
-    def warn(self, msg, log_time, **kwargs):
-        self._log(self._construct_params('WARNING', msg, log_time, **kwargs))
+    def warn(self, msg, **kwargs):
+        self._log(self._construct_params('WARNING', msg, **kwargs))
 
-    def error(self, msg, log_time, **kwargs):
-        self._log(self._construct_params('ERROR', msg, log_time, **kwargs))
+    def error(self, msg, **kwargs):
+        self._log(self._construct_params('ERROR', msg, **kwargs))
 
 
 class StdOutLogger(Logger):  # output logging to the console
@@ -55,12 +55,12 @@ class FileLogger(Logger):  # write logging to file
 
 log = StdOutLogger()
 
-log.info('This is info msg', datetime.today().isoformat(), newparam='add new param')
-log.warn('This is warn msg', datetime.today().isoformat(), newparam='add new param')
-log.error('This is error msg', datetime.today().isoformat(), newparam='add new param')
+log.info('This is info msg', newparam='add new param')
+log.warn('This is warn msg', newparam='add new param')
+log.error('This is error msg', newparam='add new param')
 
 log_write = FileLogger('/home/oleh/Study/Write', 'My_log')
 
-log_write.info('This is Info msg', datetime.today().isoformat(), newparam='add new param')
-log_write.warn('This is Warn msg', datetime.today().isoformat(), newparam='add new param')
-log_write.error('This is Error msg', datetime.today().isoformat(), newparam='add new param')
+log_write.info('This is Info msg', newparam='add new param')
+log_write.warn('This is Warn msg', newparam='add new param')
+log_write.error('This is Error msg', newparam='add new param')
