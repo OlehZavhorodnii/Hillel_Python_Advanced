@@ -53,32 +53,32 @@ class FileLogger(Logger):  # write logging to file
             self.__file.close()
 
 
+class Decorator(Logger):
+
+    def __init__(self, list_logs, info_msg, warn_msg, error_msg):
+        self.__list_logs = list_logs
+        self.__info_msg = info_msg
+        self.__warn_msg = warn_msg
+        self.__error_msg = error_msg
+
+    def __call__(self):
+        for i in self.__list_logs:
+            i.info(self.__info_msg)
+            i.warn(self.__warn_msg)
+            i.error(self.__error_msg)
+        return
+
+
 log1 = StdOutLogger()
 log2 = StdOutLogger()
 log3 = StdOutLogger()
 
 list_logs = [log1, log2, log3]
 
+log4 = StdOutLogger()
 
-def decorator_Logger(Cls, list_logs, info_msg, warn_msg, error_msg):
-    """
-    ДЗ 9. "Задекорировать" свой Logger с прошлого задания.
-    Необходимо реализовать такой декоратор, который принимает список логгеров
-    и каждое сообщение (инфо, ворнниг, эррор) ретранслирует каждому логгеру.
-    Такой подход известен как fan-out.
-    """
+list_logs.append(log4)
 
-    def wrapper():
-        map(Cls.info(info_msg), list_logs)
-        map(Cls.warn(warn_msg), list_logs)
-        map(Cls.error(error_msg), list_logs)
-        return
-
-    return wrapper
-
-
-decorator_Logger(StdOutLogger(), list_logs, 'This is info msg', 'This is warn msg', 'This is error msg')
-
-log = StdOutLogger()
-log.info('This is info msg')
+StdOutLogger = Decorator(list_logs, 'This is info msg', 'This is warn msg', 'This is error msg')
+StdOutLogger()
 
