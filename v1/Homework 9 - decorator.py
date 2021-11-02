@@ -55,17 +55,28 @@ class FileLogger(Logger):  # write logging to file
 
 class Decorator(Logger):
 
-    def __init__(self, list_logs, info_msg, warn_msg, error_msg):
+    def __init__(self, logger:Logger, list_logs, level, msg, **kwargs):
+        self.__logger = logger
         self.__list_logs = list_logs
-        self.__info_msg = info_msg
-        self.__warn_msg = warn_msg
-        self.__error_msg = error_msg
+        self.__level = level
+        self.__msg = msg
+
+    def info(self, msg, **kwargs):
+
+
+    def _binding(self, level, msg):
+        d = {
+            
+        }
+        pass
 
     def __call__(self):
         for i in self.__list_logs:
-            i.info(self.__info_msg)
-            i.warn(self.__warn_msg)
-            i.error(self.__error_msg)
+
+            i.info(self.__msg)
+            i.warn(self.__msg)
+            if self.__level == 'error':
+                i.error(self.__msg)
         return
 
 
@@ -79,6 +90,7 @@ log4 = StdOutLogger()
 
 list_logs.append(log4)
 
-StdOutLogger = Decorator(list_logs, 'This is info msg', 'This is warn msg', 'This is error msg')
+StdOutLogger = Decorator(list_logs, 'error', 'Something bad has happened')
+# StdOutLogger = Decorator(list_logs,'Something bad has happened')
 StdOutLogger()
 
